@@ -1,0 +1,92 @@
++--------------------+                 +-------------------------+
+|                    |                 |                         |
+|        Browser     |----------->      |  Local DNS Resolver    |
+|                    |                 |                         |
++--------------------+                 +-------------------------+
+           |
+           | DNS Lookup (www.google.com)
+           v
++--------------------+                 +-------------------------+
+|                    |                 |        Root Nameserver  |
+|                    |----------->      |                         |
++--------------------+                 +-------------------------+
+           |
+           | Refer to TLD Nameserver (.com)
+           v
++--------------------+                 +-------------------------+
+|                    |                 |       TLD Nameserver    |
+|                    |----------->      |                         |
++--------------------+                 +-------------------------+
+           |
+           | Refer to Authoritative Nameserver for google.com
+           v
++--------------------+                 +-------------------------+
+|                    |                 |  Authoritative Nameserver|
+|                    |----------->      |                         |
++--------------------+                 +-------------------------+
+           |
+           | Responds with IP address of google.com
+           v
++--------------------+                 +-------------------------+
+|                    |                 |        Browser     |
+|                    |<---------      |                         |
++--------------------+                 +-------------------------+
+           |
+           | HTTPS request sent to google.com on port 443
+           v
++--------------------+                 +-------------------------+
+|                    |                 |          Firewall       |
+|                    |----------->      |                         |
++--------------------+                 +-------------------------+
+           |
+           | Filters malicious traffic
+           v
++--------------------+                 +-------------------------+
+|                    |                 |        Load Balancer   |
+|                    |----------->      |                         |
++--------------------+                 +-------------------------+
+           |
+           | Distributes traffic across multiple web servers
+           v
++--------------------+                 +-------------------------+
+|                    |                 |          Web Server    |
+|                    |----------->      |                         |
++--------------------+                 +-------------------------+
+           |
+           | Processes request and generates HTML response
+           v
++--------------------+                 +-------------------------+
+|                    |                 |       Application Server |
+|                    |----------->      | (if needed)             |
++--------------------+                 +-------------------------+
+           |
+           | Generates dynamic content and interacts with database
+           v
++--------------------+                 +-------------------------+
+|                    |                 |          Web Server    |
+|                    |<---------      |                         |
++--------------------+                 +-------------------------+
+           |
+           | Sends HTML response back to browser
+           v
++--------------------+                 +-------------------------+
+|                    |                 |        Browser     |
+|                    |<---------      |                         |
++--------------------+                 +-------------------------+
+           |
+           | Renders HTML content and displays webpage
+           v
++--------------------+                 +-------------------------+
+
+
+Here’s a breakdown of the flow:
+DNS Lookup: The user types https://www.google.com into their browser. The browser doesn't know the IP address of google.com, so it asks a local DNS resolver for help. The local DNS resolver checks its cache to see if it already knows the IP address. If it doesn't, it initiates a recursive query to find the IP address.
+Root Nameserver: The local DNS resolver queries a root nameserver. The root nameserver doesn't know the IP address of google.com, but it knows the location of the TLD nameserver for .com domains.
+TLD Nameserver: The local DNS resolver queries the TLD nameserver for .com domains. The TLD nameserver knows the location of the authoritative nameserver for google.com.
+Authoritative Nameserver: The local DNS resolver queries the authoritative nameserver for google.com. The authoritative nameserver responds with the IP address of google.com.
+HTTPS Request: The browser now knows the IP address of google.com and can send an HTTPS request to the server on port 443 (the standard port for HTTPS).
+Firewall: The request first passes through a firewall that filters out malicious traffic.
+Load Balancer: The request is then routed by a load balancer to distribute traffic evenly across multiple web servers.
+Web Server: A web server receives the request and processes it to generate an HTML response.
+Application Server (optional): In some cases, the web server might hand
+
